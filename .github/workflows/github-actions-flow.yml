@@ -19,6 +19,10 @@ jobs:
           echo "Triggered by ${{ github.actor }} through a ${{ github.event_name }} event."
           echo "Running on a ${{ runner.os }} server hosted by GitHub"
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
+      - name: Virtual Environment Creation and Activation
+        run: |
+          virtualenv -p python3 huntingspace
+          . huntingspace/bin/activate
       - name: Code Checkout
         uses: actions/checkout@v3
       - name: Kestrel Code Checkout
