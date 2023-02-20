@@ -21,8 +21,10 @@ jobs:
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
       - name: Virtual Environment Creation and Activation
         run: |
-          virtualenv -p python3 huntingspace
+          pip install --upgrade pip
+          python3 -m venv huntingspace
           . huntingspace/bin/activate
+          echo "VIRTUAL ENV:" $VIRTUAL_ENV
       - name: Code Checkout
         uses: actions/checkout@v3
       - name: Kestrel Code Checkout
