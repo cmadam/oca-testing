@@ -32,13 +32,17 @@ jobs:
         with:
           repository: ${{ github.actor }}/kestrel-lang
           path: './kestrel-lang'
-      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - name: STIX-Shifter Code Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.actor }}/stix-shifter
+          path: './stix-shifter'
       - name: Launch the elastic docker image
         run: |
           docker network create elastic
           docker run -d --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
-      - run: echo "The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - run: echo "This job's status is ${{ job.status }}."
+      - name: Job Status
+        run: echo "This job's status is ${{ job.status }}."
