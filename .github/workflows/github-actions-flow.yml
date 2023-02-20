@@ -1,18 +1,36 @@
-name: GitHub Actions Flow
-run-name: ${{ github.actor }} is testing out GitHub Actions
-on: [push]
+name: Integration Testing for Kestrel and STIX-Shifter Using GitHub Actions
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
 jobs:
-  Explore-GitHub-Actions:
+  integrated-testing:
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+      - name: Worflow Information
+        run: |
+          echo "Triggered by ${{ github.actor }} through a ${{ github.event_name }} event."
+          echo "Running on a ${{ runner.os }} server hosted by GitHub"
+          echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
+      - name: Code Checkout
         uses: actions/checkout@v3
+      - name: Kestrel Code Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.actor }}/kestrel-lang
+          path: './kestrel-lang'
       - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
       - name: Launch the elastic docker image
-        run: docker run -d --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
+        run: |
+          docker net create elastic
+          docker run -d --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
       - run: echo "The workflow is now ready to test your code on the runner."
       - name: List files in the repository
         run: |
