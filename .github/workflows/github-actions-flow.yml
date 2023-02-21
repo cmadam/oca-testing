@@ -19,14 +19,6 @@ jobs:
           echo "Triggered by ${{ github.actor }} through a ${{ github.event_name }} event."
           echo "Running on a ${{ runner.os }} server hosted by GitHub"
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
-      - name: Virtual Environment Creation and Activation
-        run: |
-          pwd
-          pip install --upgrade pip
-          python3 -m venv huntingspace
-          . huntingspace/bin/activate
-          echo "VIRTUAL ENV:" $VIRTUAL_ENV
-          echo "venv_activate=$VIRTUAL_ENV/bin/activate" >> $GITHUB_ENV
       - name: Code Checkout
         uses: actions/checkout@v3
       - name: Kestrel Code Checkout
@@ -39,6 +31,14 @@ jobs:
         with:
           repository: ${{ github.actor }}/stix-shifter
           path: './stix-shifter'
+      - name: Virtual Environment Creation and Activation
+        run: |
+          pwd
+          pip install --upgrade pip
+          python3 -m venv huntingspace
+          . huntingspace/bin/activate
+          echo "VIRTUAL ENV:" $VIRTUAL_ENV
+          echo "venv_activate=$VIRTUAL_ENV/bin/activate" >> $GITHUB_ENV
       - name: Install kestrel and STIX-Shifter from Source Code
         run: |
           source ${{ env.venv_activate }}
