@@ -39,6 +39,7 @@ jobs:
           path: './stix-shifter'
       - name: Install kestrel and STIX-Shifter from Source Code
         run: |
+          . huntingspace/bin/activate
           cd stix-shifter
           VERSION=9.9.99 python3 setup.py install
           cd ../kestrel-lang
