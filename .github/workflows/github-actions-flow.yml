@@ -21,6 +21,7 @@ jobs:
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
       - name: Virtual Environment Creation and Activation
         run: |
+          pwd
           pip install --upgrade pip
           python3 -m venv huntingspace
           . huntingspace/bin/activate
