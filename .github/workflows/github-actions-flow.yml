@@ -50,6 +50,11 @@ jobs:
           sed -i 's/.*stix-shifter=.*/    stix-shifter==9.9.99/' setup.cfg
           sed -i 's/.*stix-shifter>.*/    stix-shifter==9.9.99/' setup.cfg
           pip install .
+      - name: Install elastictl
+        run: |
+          wget https://github.com/binwiederhier/elastictl/releases/download/v0.0.5/elastictl_0.0.5_linux_x86_64.tar.gz
+          tar zxf elastictl_0.0.5_linux_x86_64.tar.gz
+          ./elastictl --help
       - name: Launch the elastic docker image
         run: |
           docker network create elastic
