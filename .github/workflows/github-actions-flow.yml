@@ -54,7 +54,7 @@ jobs:
         run: |
           wget https://github.com/binwiederhier/elastictl/releases/download/v0.0.5/elastictl_0.0.5_linux_x86_64.tar.gz
           tar zxf elastictl_0.0.5_linux_x86_64.tar.gz
-          ./elastictl --help
+          ./elastictl e --help
       - name: Launch the elastic docker image
         run: |
           docker network create elastic
