@@ -29,6 +29,9 @@ data = {
         }
     }
 }
-data = json.loads(json.dumps(data))
+data = json.dumps(data)
 res = requests.get(url, data=data, headers=headers, verify=False)
-print(f'{res.status_code}: {res.text}')
+if res.status_code == 200:
+    print(f'{res.status_code}:\n{json.dumps(res.json(), indent=2)}')
+else:
+    print(f'{res.status_code}: {res.text}')
