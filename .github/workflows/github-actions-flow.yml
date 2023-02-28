@@ -63,8 +63,7 @@ jobs:
           ./elastictl e --help
       - name: Import test data in elastic instance
         run: |
-          sleep 180 # delay import so the elastic server has more time to come up
-          echo "TODO: replace sleep with elastic server status check"
+          python import_data.py
           ./elastictl i test-ecs < test-ecs.data
       - name: List files in the repository
         run: |
