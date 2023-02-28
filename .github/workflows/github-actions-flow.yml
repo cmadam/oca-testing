@@ -19,6 +19,12 @@ jobs:
           echo "Triggered by ${{ github.actor }} through a ${{ github.event_name }} event."
           echo "Running on a ${{ runner.os }} server hosted by GitHub"
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
+      - name: Launch the elastic docker image
+        run: |
+          docker network create elastic
+          docker run -d --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
+          sleep 5
+          docker ps -a
       - name: Code Checkout
         uses: actions/checkout@v3
       - name: Kestrel Code Checkout
@@ -55,14 +61,11 @@ jobs:
           wget https://github.com/binwiederhier/elastictl/releases/download/v0.0.5/elastictl_0.0.5_linux_x86_64.tar.gz
           tar zxf elastictl_0.0.5_linux_x86_64.tar.gz
           ./elastictl e --help
-      - name: Launch the elastic docker image
-        run: |
-          docker network create elastic
-          docker run -d --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
-          sleep 5
-          docker ps -a
       - name: Import test data in elastic instance
-        run: ./elastictl i test-ecs < test-ecs.data
+        run: |
+          sleep 180 # delay import so the elastic server has more time to come up
+          echo "TODO: replace sleep with elastic server status check"
+          ./elastictl i test-ecs < test-ecs.data
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
