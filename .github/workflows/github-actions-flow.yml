@@ -62,7 +62,7 @@ jobs:
           sleep 5
           docker ps -a
       - name: Import test data in elastic instance
-        run: ./elastictl i < test-ecs.data
+        run: ./elastictl i test-ecs < test-ecs.data
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
