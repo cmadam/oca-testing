@@ -61,6 +61,8 @@ jobs:
           docker run -d --name elasticsearch --net elastic -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.8
           sleep 5
           docker ps -a
+      - name: Import test data in elastic instance
+        run: ./elastictl i < test-ecs.data
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
