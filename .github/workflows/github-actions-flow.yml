@@ -64,7 +64,7 @@ jobs:
       - name: Import test data in elastic instance
         run: |
           python import_data.py
-          ./elastictl i test-ecs < test-ecs.data
+          echo "./elastictl i test-ecs < test-ecs.data"
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
