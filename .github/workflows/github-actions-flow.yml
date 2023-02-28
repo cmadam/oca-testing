@@ -58,8 +58,8 @@ jobs:
           pip install .
       - name: Install elastictl
         run: |
-          wget https://github.com/binwiederhier/elastictl/releases/download/v0.0.5/elastictl_0.0.5_linux_x86_64.tar.gz
-          tar zxf elastictl_0.0.5_linux_x86_64.tar.gz
+          # wget https://github.com/binwiederhier/elastictl/releases/download/v0.0.5/elastictl_0.0.5_linux_x86_64.tar.gz
+          # tar zxf elastictl_0.0.5_linux_x86_64.tar.gz
           ./elastictl e --help
       - name: Import test data in elastic instance
         run: |
