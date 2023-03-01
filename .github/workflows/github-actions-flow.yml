@@ -67,13 +67,11 @@ jobs:
           cd elastictl
           export DOCKER_BUILDKIT=1
           docker build --target bin --output bin/ -f Dockerfile.build.elastictl .
-          cp bin/elastictl ${{ github.workspace }}
-          cd ${{ github.workspace }}
-          ./elastictl e --help
+          bin/elastictl e --help
       - name: Import test data in elastic instance
         run: |
           python import_data.py
-          ./elastictl i -N test-ecs < test-ecs.data
+          elastictl/bin/elastictl i -N test-ecs < test-ecs.data
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
