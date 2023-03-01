@@ -37,6 +37,11 @@ jobs:
         with:
           repository: ${{ github.actor }}/stix-shifter
           path: './stix-shifter'
+      - name: elastictl Code Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: subbyte/elastictl
+          path: './elastictl'
       - name: Virtual Environment Creation and Activation
         run: |
           pwd
@@ -58,8 +63,12 @@ jobs:
           pip install .
       - name: Install elastictl
         run: |
-          # wget https://github.com/binwiederhier/elastictl/releases/download/v0.0.5/elastictl_0.0.5_linux_x86_64.tar.gz
-          # tar zxf elastictl_0.0.5_linux_x86_64.tar.gz
+          cp Dockerfile.build elastictl
+          cd elastictl
+          export DOCKER_BUILDKIT=1
+          docker build --target bin --output bin/ -f Dockerfile.build .
+          cp bin/elastictl ${{ github.workspace }}
+          cd ${{ github.workspace }}
           ./elastictl e --help
       - name: Import test data in elastic instance
         run: |
