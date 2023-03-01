@@ -63,10 +63,10 @@ jobs:
           pip install .
       - name: Install elastictl
         run: |
-          cp Dockerfile.build elastictl
+          cp Dockerfile.build.elastictl elastictl
           cd elastictl
           export DOCKER_BUILDKIT=1
-          docker build --target bin --output bin/ -f Dockerfile.build .
+          docker build --target bin --output bin/ -f Dockerfile.build.elastictl .
           cp bin/elastictl ${{ github.workspace }}
           cd ${{ github.workspace }}
           ./elastictl e --help
