@@ -70,6 +70,9 @@ jobs:
           bin/elastictl e --help
       - name: Import test data in elastic instance
         run: |
+          wget https://github.com/opencybersecurityalliance/data-bucket-kestrel/raw/main/elasticsearch/linux-91-sysflow-test-20220725.json.gz
+          wget https://github.com/opencybersecurityalliance/data-bucket-kestrel/raw/main/elasticsearch/win-111-winlogbeat-bh22-20220727.json.gz
+          wget https://github.com/opencybersecurityalliance/data-bucket-kestrel/raw/main/elasticsearch/win-111-winlogbeat-test-20220726.json.gz
           python import_data.py
           elastictl/bin/elastictl i -N test-ecs < test-ecs.data
       - name: List files in the repository
