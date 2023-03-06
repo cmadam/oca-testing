@@ -19,6 +19,7 @@ jobs:
           echo "Triggered by ${{ github.actor }} through a ${{ github.event_name }} event."
           echo "Running on a ${{ runner.os }} server hosted by GitHub"
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
+          echo "HOME = ${HOME}"
       - name: Code Checkout
         uses: actions/checkout@v3
       - name: Launch the elastic docker image
