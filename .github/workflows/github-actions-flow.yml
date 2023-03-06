@@ -19,10 +19,10 @@ jobs:
           echo "Triggered by ${{ github.actor }} through a ${{ github.event_name }} event."
           echo "Running on a ${{ runner.os }} server hosted by GitHub"
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
-      - name: Launch the elastic docker image
-        run: ./elastic-install.sh
       - name: Code Checkout
         uses: actions/checkout@v3
+      - name: Launch the elastic docker image
+        run: ./elastic-install.sh
       - name: Kestrel Code Checkout
         uses: actions/checkout@v3
         with:
