@@ -46,8 +46,8 @@ jobs:
         run: |
           pwd
           pip install --upgrade pip
-          python3 -m venv huntingspace
-          . huntingspace/bin/activate
+          python3 -m venv huntingtest
+          . huntingtest/bin/activate
           echo "VIRTUAL ENV:" $VIRTUAL_ENV
           echo "venv_activate=$VIRTUAL_ENV/bin/activate" >> $GITHUB_ENV
       - name: Install kestrel and STIX-Shifter from Source Code
