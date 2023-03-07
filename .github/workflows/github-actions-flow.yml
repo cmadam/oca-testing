@@ -42,6 +42,7 @@ jobs:
       - name: Virtual Environment Creation and Activation
         run: |
           ./create-venv.sh
+          . huntingtest/bin/activate
           echo "venv_activate=$VIRTUAL_ENV/bin/activate" >> $GITHUB_ENV
       - name: Install kestrel and STIX-Shifter from Source Code
         run: |
