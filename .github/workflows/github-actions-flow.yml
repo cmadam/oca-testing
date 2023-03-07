@@ -67,7 +67,7 @@ jobs:
           elastictl/bin/elastictl i -N test-ecs < test-ecs.data
           elastictl/bin/elastictl i -N linux-91-sysflow-test-20220725 < linux-91-sysflow-test-20220725.json
           elastictl/bin/elastictl i -N win-111-winlogbeat-bh22-20220727 < win-111-winlogbeat-bh22-20220727.json
-          elastictl/bin/elastictl i -N win-111-winlogbeat-test-20220726 < win-111-winlogbeat-test-20220726.json.gz
+          elastictl/bin/elastictl i -N win-111-winlogbeat-test-20220726 < win-111-winlogbeat-test-20220726.json
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
