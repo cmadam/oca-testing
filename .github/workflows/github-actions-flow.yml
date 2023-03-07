@@ -52,12 +52,10 @@ jobs:
       - name: Install elastictl
         run: |
           cp Dockerfile.build.elastictl elastictl
-          cd elastictl
-          export DOCKER_BUILDKIT=1
-          docker build --target bin --output bin/ -f Dockerfile.build.elastictl .
-          bin/elastictl e --help
+          ./install-elastictl.sh
       - name: Import test data in elastic instance
         run: |
+          source ${{ env.venv_activate }}
           wget https://github.com/opencybersecurityalliance/data-bucket-kestrel/raw/main/elasticsearch/linux-91-sysflow-test-20220725.json.gz
           wget https://github.com/opencybersecurityalliance/data-bucket-kestrel/raw/main/elasticsearch/win-111-winlogbeat-bh22-20220727.json.gz
           wget https://github.com/opencybersecurityalliance/data-bucket-kestrel/raw/main/elasticsearch/win-111-winlogbeat-test-20220726.json.gz
