@@ -41,23 +41,13 @@ jobs:
           path: './elastictl'
       - name: Virtual Environment Creation and Activation
         run: |
-          pwd
-          pip install --upgrade pip
-          python3 -m venv huntingtest
-          . huntingtest/bin/activate
-          echo "VIRTUAL ENV:" $VIRTUAL_ENV
+          ./create-venv.sh
           echo "venv_activate=$VIRTUAL_ENV/bin/activate" >> $GITHUB_ENV
       - name: Install kestrel and STIX-Shifter from Source Code
         run: |
           source ${{ env.venv_activate }}
           cd ${{ github.workspace }} 
-          cd stix-shifter
-          VERSION=9.9.99 python3 setup.py install
-          cd ../kestrel-lang
-          sed -i 's/.*stix-shifter-utils.*/    stix-shifter-utils==9.9.99/' setup.cfg
-          sed -i 's/.*stix-shifter=.*/    stix-shifter==9.9.99/' setup.cfg
-          sed -i 's/.*stix-shifter>.*/    stix-shifter==9.9.99/' setup.cfg
-          pip install .
+          ./install-stix-shifter-kestrel.sh
       - name: Install elastictl
         run: |
           cp Dockerfile.build.elastictl elastictl
