@@ -52,6 +52,7 @@ jobs:
       - name: Install elastictl
         run: |
           cp Dockerfile.build.elastictl elastictl
+          cp elastictl-patch/import.go elastictl/tools/
           ./install-elastictl.sh
       - name: Import test data in elastic instance
         run: |
