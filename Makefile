@@ -1,6 +1,6 @@
 .PHONY: all checkout install-elastic venv install-code install-elastictl install-data test run cleanup
 install-elastic:
-	./elastic-install.sh
+	python setup_elastic.py
 checkout:
 	./checkout-code.sh
 venv:
