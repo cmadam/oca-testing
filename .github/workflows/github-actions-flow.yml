@@ -22,8 +22,6 @@ jobs:
           echo "HOME = ${HOME}"
       - name: Code Checkout
         uses: actions/checkout@v3
-      - name: Launch the elastic docker image
-        run: ./elastic-install.sh
       - name: Kestrel Code Checkout
         uses: actions/checkout@v3
         with:
@@ -39,7 +37,7 @@ jobs:
         with:
           repository: subbyte/elastictl
           path: './elastictl'
-      - name: Virtual Environment Creation and Activation
+      - name: Create Virtual Environment
         run: |
           ./create-venv.sh
           . huntingtest/bin/activate
@@ -54,6 +52,10 @@ jobs:
           cp Dockerfile.build.elastictl elastictl
           cp elastictl-patch/import.go elastictl/tools/
           ./install-elastictl.sh
+      - name: Elasticsearch instance setup
+        run: |
+          source ${{ env.venv_activate }}
+          python setup_elastic.py
       - name: Import test data in elastic instance
         run: |
           source ${{ env.venv_activate }}
