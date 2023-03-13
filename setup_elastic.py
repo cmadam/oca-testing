@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 
+# setup 'elastic' docker network
 print("Checking existence of the 'elastic' network")
 proc1 = subprocess.run(shlex.split('docker network ls'), capture_output=True, encoding='utf-8')
 docker_networks = proc1.stdout.split('\n')
@@ -27,7 +28,8 @@ else:
         print(f"Failed to create 'elastic' docker network: "
               f"error code {proc2.returncode}, error message: {proc2.stderr}")
         sys.exit(-1)
-        
+
+# launch elasticsearch docker instance
 print("Launching elasticsearch docker instance")
 proc3 = subprocess.run(
     shlex.split('docker run -d --name es01 -e ES_JAVA_OPTS="-Xms1g -Xmx1g" '
@@ -41,6 +43,7 @@ if proc3.returncode != 0:
           f"error code {proc3.returncode},\n{proc3.stderr}")
     # sys.exit(-1)
 
+# setup elasticsearch password
 pwd = None
 proc4 = subprocess.run(shlex.split(
     'docker exec -it es01 bash -c "bin/elasticsearch-reset-password '
@@ -49,10 +52,33 @@ if proc4.returncode != 0:
     print(f"Failed to get logs for 'es01': error code {proc4.returncode}\n"
           f"{proc4.stderr}")
     sys.exit(-1)
-proc4_stdout = proc4.stdout
-pwd = proc4_stdout.strip()
-# pwd = str(proc4.stdout.encode('utf-8', errors='ignore').strip())
-# pwd = proc4.stdout.strip()
+pwd = proc4.stdout.strip()
 pwd_file_name = os.path.join(os.getenv('HOME'), '.es_pwd')
 with open(pwd_file_name, 'w') as f:
     f.write(pwd)
+
+# proceed after elasticsearch passes healthcheck
+elastic_ready = False
+localhost_url = 'https://localhost:9200'
+attempts = 1
+headers = {}
+headers['Authorization'] = b"Basic " + base64.b64encode(f'elastic:{pwd}'.encode('ascii'))
+while not elastic_ready and attempts <= 20:
+    try:
+        res = requests.get(localhost_url, headers=headers, verify=False)
+        print(f"{res.status_code}: {res.text}")
+        if res.status_code == 200:
+            elastic_ready = True
+        else:
+            attempts += 1
+            print(f"Attempt {attempts} to ping elastic server")
+            time.sleep(5)
+    except:
+        attempts += 1
+        print(f"Attempt {attempts} to ping elastic server after failing to connect")
+        time.sleep(5)
+if elastic_ready:
+    print(f"Elastic server ready after {attempts} attempts")
+else:
+    print(f"Gave up after {attempts} attempts")
+    sys.exit(-1)
