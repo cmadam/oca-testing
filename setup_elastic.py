@@ -13,6 +13,8 @@ docker_networks = proc1.stdout.split('\n')
 elastic_net_found = False
 for docker_net in docker_networks:
     net = docker_net.split()
+    if len(net) < 2:
+        continue
     if net[1] == 'elastic':
         elastic_net_found = True
         break
