@@ -10,6 +10,6 @@ docker run -d --name es01 -e ES_JAVA_OPTS="-Xms1g -Xmx1g" -e "discovery.type=sin
 python setup_elastic.py
 
 echo "docker exec -it es01 bash -c \"bin/elasticsearch-reset-password -u elastic -s -b\""
-docker exec -it es01 bash -c "bin/elasticsearch-reset-password -u elastic -s -b" > "${HOME}"/.es_pwd
+docker exec es01 bash -lc "bin/elasticsearch-reset-password -u elastic -s -b" > "${HOME}"/.es_pwd
 
 python setup_elastic.py --secure
