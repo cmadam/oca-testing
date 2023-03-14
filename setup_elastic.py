@@ -36,7 +36,8 @@ print("Launching elasticsearch docker instance")
 proc3 = subprocess.run(
     shlex.split('docker run -d --name es01 -e ES_JAVA_OPTS="-Xms1g -Xmx1g" '
                 '-e "discovery.type=single-node" --net elastic -p 9200:9200 '
-                'docker.elastic.co/elasticsearch/elasticsearch:8.6.2'),
+                '-it docker.elastic.co/elasticsearch/elasticsearch:8.6.2'),
+    shell=True,
     capture_output=True,
     encoding='utf-8'
 )
@@ -58,6 +59,7 @@ pwd = proc4.stdout.strip()
 pwd_file_name = os.path.join(os.getenv('HOME'), '.es_pwd')
 with open(pwd_file_name, 'w') as f:
     f.write(pwd)
+print('Setup elasticsearch password')
 
 # proceed after elasticsearch passes healthcheck
 elastic_ready = False
