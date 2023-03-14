@@ -45,7 +45,8 @@ jobs:
       - name: Elasticsearch instance setup
         run: |
           source ${{ env.venv_activate }}
-          python setup_elastic.py
+          cd ${{ github.workspace }} 
+          ./install-elastic.sh
       - name: Import test data in elastic instance
         run: |
           source ${{ env.venv_activate }}
