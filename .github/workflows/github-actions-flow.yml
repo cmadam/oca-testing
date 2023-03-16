@@ -22,26 +22,27 @@ jobs:
           echo "HOME = ${HOME}"
       - name: Code Checkout
         uses: actions/checkout@v3
-      # - name: Kestrel Code Checkout
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: ${{ github.actor }}/kestrel-lang
-      #     path: './kestrel-lang'
-      # - name: STIX-Shifter Code Checkout
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: ${{ github.actor }}/stix-shifter
-      #     path: './stix-shifter'
+      - name: Kestrel Code Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: opencybersecurityalliance/kestrel-lang
+          ref: develop_stixshifter_v5
+          path: './kestrel-lang'
+      - name: STIX-Shifter Code Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: opencybersecurityalliance/stix-shifter
+          path: './stix-shifter'
       - name: Create Virtual Environment
         run: |
           ./create-venv.sh
           . huntingtest/bin/activate
           echo "venv_activate=$VIRTUAL_ENV/bin/activate" >> $GITHUB_ENV
-      # - name: Install kestrel and STIX-Shifter from Source Code
-      #   run: |
-      #     source ${{ env.venv_activate }}
-      #     cd ${{ github.workspace }} 
-      #     ./install-stix-shifter-kestrel.sh
+      - name: Install kestrel and STIX-Shifter from Source Code
+        run: |
+          source ${{ env.venv_activate }}
+          cd ${{ github.workspace }} 
+          ./install-stix-shifter-kestrel.sh
       - name: Elasticsearch instance setup
         run: |
           source ${{ env.venv_activate }}
@@ -52,5 +53,10 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Run Integration Tests
+        run: |
+          source ${{ env.venv_activate }}
+          cd ${{ github.workspace }} 
+          ./run_kestrel.sh          
       - name: Job Status
         run: echo "This job's status is ${{ job.status }}."
