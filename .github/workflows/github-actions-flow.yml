@@ -50,13 +50,15 @@ jobs:
           ./install-elastic.sh
       - name: Import test data in elastic instance
         run: ./import-data.sh
-      - name: List files in the repository
+      - name: Check deployment of the test environment
         run: |
-          ls ${{ github.workspace }}
+          source ${{ env.venv_activate }}
+          cd ${{ github.workspace }} 
+          ./run_kestrel.sh
       - name: Run Integration Tests
         run: |
           source ${{ env.venv_activate }}
           cd ${{ github.workspace }} 
-          ./run_kestrel.sh          
+          ./run-bdd-tests.sh
       - name: Job Status
         run: echo "This job's status is ${{ job.status }}."
