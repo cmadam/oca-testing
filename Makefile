@@ -12,4 +12,4 @@ import-data:
 clean-elastic:
 	docker stop es01; docker rm es01
 clean-data:
-	rm -rf ${HOME}/huntingspace/data
+	rm -rf ${HOME}/huntingtest/data
