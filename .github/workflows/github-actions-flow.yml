@@ -61,4 +61,4 @@ jobs:
           cd ${{ github.workspace }} 
           ./run-bdd-tests.sh
       - name: Job Status
-        run: echo "This job's status is ${{ job.status }}."
+        run: echo "Job status is ${{ job.status }}."
