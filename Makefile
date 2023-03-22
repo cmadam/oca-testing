@@ -16,3 +16,5 @@ clean-elastic:
 clean-data:
 	rm -rf ${HOME}/huntingtest/data
 install-all: check-venv checkout install-code install-elastic import-data
+clean-all: clean-elastic clean-data
+	rm -rf ${HOME}/huntingtest
