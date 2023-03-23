@@ -1,9 +1,20 @@
 from kestrel.session import Session
+import shlex
+import subprocess
 
 @given(u'a Kestrel session')
 def step_impl(context):
     context.session = Session()
     assert context.session is not None
+    
+@given(u'a running instance of Elasticsearch')
+def step_impl(context):
+    ps = subprocess.Popen(shlex.split('docker ps'), stdout=subprocess.PIPE)
+    ps_es01 = subprocess.check_output(shlex.split('grep es01'), stdin=ps.stdout)
+    ps.wait()
+    es01_output = str(ps_es01, 'UTF-8')
+    print(f"ps_es01.stderr = {es01_output}")
+    assert es01_output
 
 @given(u'a huntbook named "kestrel-test.hf"')
 def step_impl(context):
