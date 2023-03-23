@@ -13,7 +13,6 @@ def step_impl(context):
     ps_es01 = subprocess.check_output(shlex.split('grep es01'), stdin=ps.stdout)
     ps.wait()
     es01_output = str(ps_es01, 'UTF-8')
-    print(f"ps_es01.stderr = {es01_output}")
     assert es01_output
 
 @given(u'a huntbook named "kestrel-test.hf"')
@@ -48,7 +47,6 @@ def step_impl(context):
 
 @then(u'I should see the statement execution results')
 def step_impl(context):
-    print(f"len(result) = {len(context.procs)}")
     assert len(context.procs) == 21
 
 
