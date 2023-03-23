@@ -1,3 +1,4 @@
+from behave import given, when, then
 from behave.model import Scenario
 
 @given(u'an Elasticsearch index')
