@@ -1,4 +1,4 @@
-.PHONY: all checkout install-elastic venv install-code import-data test run clean-elastic clean-data clean-all install-all
+.PHONY: all checkout install-elastic venv install-code import-data clean-elastic clean-data clean-all install-all check-deployment
 install-elastic:
 	./install-elastic.sh
 checkout:
@@ -11,10 +11,12 @@ install-code:
 	./install-stix-shifter-kestrel-local.sh
 import-data:
 	./import-data-local.sh
+install-all: check-venv checkout install-code install-elastic import-data
+check-deployment: check-venv
+	./run_kestrel.sh
 clean-elastic:
 	docker stop es01; docker rm es01
 clean-data:
 	rm -rf ${HOME}/huntingtest/data
-install-all: check-venv checkout install-code install-elastic import-data
 clean-all: clean-elastic clean-data
 	rm -rf ${HOME}/huntingtest
