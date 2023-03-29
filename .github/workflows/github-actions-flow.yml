@@ -20,6 +20,7 @@ jobs:
           echo "Running on a ${{ runner.os }} server hosted by GitHub"
           echo "Running in ${{ github.repository }} repository, ${{ github.ref }} branch."
           echo "HOME = ${HOME}"
+          mkdir ${HOME}/huntingtest
       - name: Code Checkout
         uses: actions/checkout@v3
       - name: Kestrel Code Checkout

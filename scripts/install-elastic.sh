@@ -10,6 +10,6 @@ pip install requests
 python scripts/setup_elastic.py
 
 echo "sudo docker exec -it es01test bash -c \"bin/elasticsearch-reset-password -u elastic -s -b\""
-sudo docker exec es01test bash -lc "bin/elasticsearch-reset-password -u elastic -s -b" > "${HOME}"/.es_pwd
+sudo docker exec es01test bash -lc "bin/elasticsearch-reset-password -u elastic -s -b" > "${HOME}"/huntingtest/.es_pwd
 
 python scripts/setup_elastic.py --secure
