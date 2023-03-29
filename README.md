@@ -2,10 +2,12 @@
 Integration testing for kestrel and stix-shifter
 
 ## Building the testing environment locally
+### Supported platforms
+The local build of the testing environment was implemented and tested on Ubuntu 20.04
 ### Prerequisites
 Ensure that you have the following installed on your machine:
 * Docker
-* python (3.8 or later)
+* python and pip (3.8 or later)
 * virtualenv
 * make
 ### Create and activate a python virtual environment
@@ -31,6 +33,8 @@ This step will:
   * create a docker instance of elasticsearch, named `es01test`
     * store the password for `elastic` user on `es01test` in the file `${HOME}/es_pwd`
   * Import three elastic indexes in the newly created elasticsearch instance
+
+TODO: change the kestrel branch. When building locally, allow checking out custom branches, tags, or even commits.
 
 ### End-to-end test of the deployed testing environment
 Run this step with this command:
