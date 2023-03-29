@@ -20,3 +20,5 @@ clean-data:
 	rm -rf ${HOME}/huntingtest/data
 clean-all: clean-elastic clean-data
 	rm -rf ${HOME}/huntingtest
+bdd-tests: check-venv
+	./run-bdd-tests.sh
