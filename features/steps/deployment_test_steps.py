@@ -11,7 +11,7 @@ def step_impl(context):
 @given(u'a running instance of Elasticsearch')
 def step_impl(context):
     ps = subprocess.Popen(shlex.split('docker ps'), stdout=subprocess.PIPE)
-    ps_es01 = subprocess.check_output(shlex.split('grep es01'), stdin=ps.stdout)
+    ps_es01 = subprocess.check_output(shlex.split('grep es01test'), stdin=ps.stdout)
     ps.wait()
     es01_output = str(ps_es01, 'UTF-8')
     assert es01_output

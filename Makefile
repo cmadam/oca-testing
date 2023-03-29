@@ -15,7 +15,7 @@ install-all: check-venv checkout install-code install-elastic import-data
 check-deployment: check-venv
 	./run_kestrel.sh
 clean-elastic:
-	docker stop es01; docker rm es01
+	docker stop es01test; docker rm es01test
 clean-data:
 	rm -rf ${HOME}/huntingtest/data
 clean-all: clean-elastic clean-data
