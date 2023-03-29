@@ -18,6 +18,10 @@ source ${HOME}/huntingtest/huntingtest/bin/activate
 ```
 
 ### Bring up the testing environment
+Run this step with this command:
+```
+make install-all
+```
 This step will:
   * checkout the code for:
     * kestrel (`develop_stixshifter_v5` branch) and 
@@ -29,5 +33,22 @@ This step will:
   * Import three elastic indexes in the newly created elasticsearch instance
 
 ### End-to-end test of the deployed testing environment
+Run this step with this command:
+```
+make check-deployment
+```
+This step will run [a test huntbook](kestrel-test.hf) to test the deployment end-to-end.
 
-### BDD tests
+## Running BDD tests
+We are using [behave](https://github.com/behave/behave) to run the integration tests.
+For now, [we have converted to BDD format](features/deployment-test.feature) the test described in the previous section.
+Run the BDD tests manually with this command:
+```
+make bdd-tests
+```
+
+## Running the integration tests using github actions
+The github actions workflow for integration testing is specified [here](.github/workflows/github-actions-flow.yml)
+
+The github actions workflow is currently triggered every time a new commit is pushed, or a pull request is created in this repository. The workflow can also be triggered manually.   
+TODO: start the workflow whenever a push request is created in the kestrel-lang or stix-shifter repository.
