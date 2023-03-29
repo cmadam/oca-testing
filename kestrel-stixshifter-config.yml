@@ -3,7 +3,7 @@ profiles:
         connector: elastic_ecs
         connection:
             host: localhost
-            port: 9200
+            port: 9234
             selfSignedCert: false
             indices: win-111-winlogbeat-bh22-20220727
             options:

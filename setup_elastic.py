@@ -25,7 +25,7 @@ if args.secure:
     with open(os.path.join(os.getenv('HOME'), '.es_pwd'), 'w') as f:
         f.write(pwd)
 elastic_ready = False
-localhost_url = 'https://localhost:9200'
+localhost_url = 'https://localhost:9234'
 attempts = 1
 headers = {}
 headers['Authorization'] = b"Basic " + base64.b64encode(f'elastic:{pwd}'.encode('ascii'))
