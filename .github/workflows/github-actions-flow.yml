@@ -60,5 +60,12 @@ jobs:
           source ${{ env.venv_activate }}
           cd ${{ github.workspace }} 
           ./run-bdd-tests.sh
+      - name: Cleanup
+        run: |
+          docker stop es01test
+          docker rm es01test
+          docker network rm elastic
+          rm -rf data
+
       - name: Job Status
         run: echo "Job status is ${{ job.status }}."
