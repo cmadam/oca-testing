@@ -2,8 +2,12 @@
 CRT_DIR=${PWD}
 mkdir -p "${HOME}"/huntingtest
 cd "${HOME}"/huntingtest || exit
-pip install --upgrade pip
-virtualenv -p python3 huntingtest
+pip install --upgrade pip wheel
+VIRTUALENV="${HOME}"/.local/bin/virtualenv
+if [[ -f /ust/bin/virtualenv ]]; then
+	VIRTUALENV=/usr/bin/virtualenv
+fi
+"${VIRTUALENV}" -p python3 huntingtest
 echo "NB: This script created a virtual environment, but did not activate it."
 echo "To activate, run \"source ${HOME}/huntingtest/huntingtest/bin/activate\""
 cd "${CRT_DIR}" || exit
