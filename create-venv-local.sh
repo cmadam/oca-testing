@@ -4,7 +4,7 @@ mkdir -p "${HOME}"/huntingtest
 cd "${HOME}"/huntingtest || exit
 pip install --upgrade pip wheel
 VIRTUALENV="${HOME}"/.local/bin/virtualenv
-if [[ -f /ust/bin/virtualenv ]]; then
+if [[ -f /usr/bin/virtualenv ]]; then
 	VIRTUALENV=/usr/bin/virtualenv
 fi
 "${VIRTUALENV}" -p python3 huntingtest
