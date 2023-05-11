@@ -1,0 +1,19 @@
+name: Dispatcher Using Action
+on:
+  push:
+    branches: [main]
+jobs:
+  dispatch:
+    name: Dispatch Using Action
+    strategy:
+      matrix:
+        repo: [cmadam/hunting-stack-testing]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch to workflows
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.REMOTE_PUBLIC_ACTIONS_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: testing_event
+    timeout-minutes: 5
