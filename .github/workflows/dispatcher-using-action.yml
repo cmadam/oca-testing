@@ -17,7 +17,7 @@ jobs:
           repo: hunting-stack-testing
           github_token: ${{ secrets.REMOTE_PUBLIC_ACTIONS_TOKEN }}
           workflow_file_name: testing_receiver.yml
-          ref: develop
+          ref: main
           wait_interval: 10
           propagate_failure: true
           trigger_workflow: true
