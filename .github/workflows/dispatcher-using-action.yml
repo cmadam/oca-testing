@@ -19,7 +19,7 @@ jobs:
         with:
           owner: cmadam
           repo: hunting-stack-testing
-          github_token: ${{ secrets.REMOTE_PUBLIC_ACTIONS_TOKEN }}
+          github_token: ${{ secrets.REMOTE_FINE_GRAINED_ACTIONS_TOKEN }}
           workflow_file_name: testing_receiver.yml
           ref: main
           wait_interval: 10
