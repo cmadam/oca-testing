@@ -16,7 +16,7 @@ jobs:
         with:
           owner: opencybersecurityalliance
           repo: hunting-stack-testing
-          github_token: ${{ secrets.OCA_REMOTE_FINE_GRAINED_ACTIONS_TOKEN }}
+          github_token: ${{ secrets.KESTREL_STIXSHIFTER_INTEGRATION_TESTING_TOKEN }}
           workflow_file_name: testing_receiver.yml
           ref: main
           wait_interval: 10
