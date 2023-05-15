@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Print parameters
         run: |
-          echo "organization: ${{ github.event.inputs.organization }}, branch: "${{ github.event.inputs.branch }}"
+          echo "organization: ${{ github.event.inputs.organization }}, branch: ${{ github.event.inputs.branch }}"
       - name: Dispatch to workflows
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
