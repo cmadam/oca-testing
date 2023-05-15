@@ -9,12 +9,12 @@ on:
     inputs:
       organization:
         description: 'Kestrel repo organization'
-	required: true
-	default: 'opencybersecurityalliance'
+        required: true
+        default: 'opencybersecurityalliance'
       branch:
         description: 'Kestrel repo branch'
-	required: true
-	default: 'develop'
+        required: true
+        default: 'develop'
 jobs:
   dispatch:
     name: Dispatch Using Action
