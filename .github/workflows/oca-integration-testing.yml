@@ -17,7 +17,7 @@ jobs:
           owner: opencybersecurityalliance
           repo: hunting-stack-testing
           github_token: ${{ secrets.KESTREL_STIXSHIFTER_INTEGRATION_TESTING_TOKEN }}
-          workflow_file_name: testing_receiver.yml
+          workflow_file_name: kestrel-integration-testing-flow.yml
           ref: main
           wait_interval: 10
           propagate_failure: true
