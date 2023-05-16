@@ -35,7 +35,7 @@ jobs:
                 echo "got a push event. ${{ github.event }}"
                 echo "organization=${{ github.event.repository.owner.login }}" >> $GITHUB_ENV
                 echo "repository=${{ github.event.repository.name }}" >> $GITHUB_ENV
-                echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+                echo "branch=$(echo ${${{ github.ref }}#refs/heads/} | tr / -)" >> $GITHUB_OUTPUT
             elif [[ ${{ github.event_name }} == "pull_request" ]]; then
                 echo "organization=${{ github.event.pull_request.head.repo.owner.login }}" >> $GITHUB_ENV
                 echo "repository=${{ github.event.pull_request.head.repo.name }}" >> $GITHUB_ENV
