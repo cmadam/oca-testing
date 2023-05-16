@@ -23,7 +23,17 @@ jobs:
         steps:
         - name: Print parameters
           run: |
-            echo "organization: ${{ github.event.inputs.organization }}, branch: ${{ github.event.inputs.branch }}"
+            if [[ ${{ github.event_name }} == "workflow_dispatch" ]]; then
+                echo "organization=${{ github.event.inputs.organization }}" >> $GITHUB_ENV
+                echo "branch=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
+            elif [[ ${{ github.event_name }} == "push" ]]; then
+                echo "organization=${{ github.event.push.organization }}" >> $GITHUB_ENV
+                echo "branch=${{ github.event.push.base_ref }}" >> $GITHUB_ENV
+            elif [[ ${{ github.event_name }} == "pull_request" ]]; then
+                echo "organization=${{ github.event.pull_request.head.repo.name }}" >> $GITHUB_ENV
+                echo "branch=${{ github.event.pull_request.head.label }}" >> $GITHUB_ENV
+            fi
+            echo "organization: ${{ env.organization }}, branch: ${{ env.branch }}"
         - name: Dispatch to workflows
           uses: convictional/trigger-workflow-and-wait@v1.6.5
           with:
@@ -36,14 +46,4 @@ jobs:
             propagate_failure: true
             trigger_workflow: true
             wait_workflow: true
-            client_payload: |
-                '{"organization": "${{ fromJSON(
-                    '{ "workflow_dispatch": "${{ github.event.inputs.organization }}", 
-                       "push": "${{ github.event.push.organization }}",
-                       "pull_request": "${{ github.event.pull_request.head.repo.name }}"}'
-                )[github.event_name] }}",
-                "branch": "${{ fromJSON(
-                    '{ "workflow_dispatch": "${{ github.event.inputs.branch }}", 
-                       "push": "${{ github.event.push.base_ref }}",
-                       "pull_request": "${{ github.event.pull_request.head.label }}"}'
-                )[github.event_name] }}"}'
+            client_payload: '{"organization": "${{ env.organization}}", "branch": "${{ env.branch }}"}'
