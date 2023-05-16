@@ -11,6 +11,10 @@ on:
                 description: 'Kestrel repo organization'
                 required: true
                 default: 'opencybersecurityalliance'
+            repository:
+                description: 'Kestrel repo name'
+                required: true
+                default: 'kestrel-lang'
             branch:
                 description: 'Kestrel repo branch'
                 required: true
@@ -25,13 +29,16 @@ jobs:
           run: |
             if [[ ${{ github.event_name }} == "workflow_dispatch" ]]; then
                 echo "organization=${{ github.event.inputs.organization }}" >> $GITHUB_ENV
+                echo "repository=${{ github.event.inputs.repository }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
             elif [[ ${{ github.event_name }} == "push" ]]; then
                 echo "got a push event. "
                 echo "organization=${{ github.event.push.organization }}" >> $GITHUB_ENV
+                echo "repository=${{ github.event.push.repository.name }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.push.ref }}" >> $GITHUB_ENV
             elif [[ ${{ github.event_name }} == "pull_request" ]]; then
-                echo "organization=${{ github.event.pull_request.head.repo.organization }}" >> $GITHUB_ENV
+                echo "organization=${{ github.event.pull_request.head.repo.owner.name }}" >> $GITHUB_ENV
+                echo "repository=${{ github.event.pull_request.head.repo.name }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
             fi
             echo "organization: ${{ env.organization }}, branch: ${{ env.branch }}"
