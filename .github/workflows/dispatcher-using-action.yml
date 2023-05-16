@@ -32,7 +32,7 @@ jobs:
                 echo "repository=${{ github.event.inputs.repository }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
             elif [[ ${{ github.event_name }} == "push" ]]; then
-                echo "got a push event. "
+                echo "got a push event. ${{ github.event }}"
                 echo "organization=${{ github.event.push.organization }}" >> $GITHUB_ENV
                 echo "repository=${{ github.event.push.repository.name }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.push.ref }}" >> $GITHUB_ENV
