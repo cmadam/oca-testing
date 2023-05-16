@@ -31,8 +31,8 @@ jobs:
                 echo "organization=${{ github.event.push.organization }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.push.ref }}" >> $GITHUB_ENV
             elif [[ ${{ github.event_name }} == "pull_request" ]]; then
-                echo "organization=${{ github.event.pull_request.head.repo.name }}" >> $GITHUB_ENV
-                echo "branch=${{ github.event.pull_request.head.label }}" >> $GITHUB_ENV
+                echo "organization=${{ github.event.pull_request.head.repo.organization }}" >> $GITHUB_ENV
+                echo "branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
             fi
             echo "organization: ${{ env.organization }}, branch: ${{ env.branch }}"
         - name: Dispatch to workflows
