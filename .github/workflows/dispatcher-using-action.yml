@@ -38,7 +38,7 @@ jobs:
             wait_workflow: true
             client_payload: |
                 '{"organization": "${{ fromJSON(
-                    '{ "workflow_dispatch": "\${{ github.event.inputs.organization }}", 
+                    '{ "workflow_dispatch": "${{ github.event.inputs.organization }}", 
                        "push": "${{ github.event.push.organization }}",
                        "pull_request": "${{ github.event.pull_request.head.repo.name }}"}'
                 )[github.event_name] }}",
