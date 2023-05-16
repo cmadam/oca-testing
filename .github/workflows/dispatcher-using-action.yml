@@ -19,15 +19,13 @@ on:
 jobs:
   dispatch:
     name: Dispatch Using Action
-    strategy:
-      matrix:
-        repo: [cmadam/hunting-stack-testing]
     runs-on: ubuntu-latest
     steps:
       - name: Print parameters
         run: |
           echo "organization: ${{ github.event.inputs.organization }}, branch: ${{ github.event.inputs.branch }}"
       - name: Dispatch to workflows
+        if: 
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: cmadam
@@ -39,4 +37,14 @@ jobs:
           propagate_failure: true
           trigger_workflow: true
           wait_workflow: true
-          client_payload: '{"organization": "${{ github.event.inputs.organization }}", "branch": "${{ github.event.inputs.branch }}"}'
+          client_payload: |
+            '{"organization": "${{ fromJSON(
+                '{ "workflow_dispatch": github.event.inputs.organization, 
+                   "push": github.event.push.organization,
+                   "pull_request": github.event.pull_request.head.repo.name}'
+                )[github.event_name] }}", 
+               "branch": "${{ fromJSON(
+                '{ "workflow_dispatch": github.event.inputs.branch, 
+                   "push": github.event.push.base_ref,
+                   "pull_request": github.event.pull_request.head.repo.name}'
+                )[github.event_name] }}"}'
