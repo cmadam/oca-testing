@@ -1,50 +1,49 @@
 name: Dispatcher Using Action
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main, develop]
-    types: [opened, synchronize, reopened]
-  workflow_dispatch:
-    inputs:
-      organization:
-        description: 'Kestrel repo organization'
-        required: true
-        default: 'opencybersecurityalliance'
-      branch:
-        description: 'Kestrel repo branch'
-        required: true
-        default: 'develop'
-    
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main, develop]
+        types: [opened, synchronize, reopened]
+    workflow_dispatch:
+        inputs:
+            organization:
+                description: 'Kestrel repo organization'
+                required: true
+                default: 'opencybersecurityalliance'
+            branch:
+                description: 'Kestrel repo branch'
+                required: true
+                default: 'develop'
+
 jobs:
-  dispatch:
-    name: Dispatch Using Action
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print parameters
-        run: |
-          echo "organization: ${{ github.event.inputs.organization }}, branch: ${{ github.event.inputs.branch }}"
-      - name: Dispatch to workflows
-        if: 
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
-        with:
-          owner: cmadam
-          repo: hunting-stack-testing
-          github_token: ${{ secrets.REMOTE_FINE_GRAINED_ACTIONS_TOKEN }}
-          workflow_file_name: testing_receiver.yml
-          ref: main
-          wait_interval: 10
-          propagate_failure: true
-          trigger_workflow: true
-          wait_workflow: true
-          client_payload: |
-            '{"organization": "${{ fromJSON(
-                '{ "workflow_dispatch": github.event.inputs.organization, 
-                   "push": github.event.push.organization,
-                   "pull_request": github.event.pull_request.head.repo.name}'
-                )[github.event_name] }}", 
-               "branch": "${{ fromJSON(
-                '{ "workflow_dispatch": github.event.inputs.branch, 
-                   "push": github.event.push.base_ref,
-                   "pull_request": github.event.pull_request.head.repo.name}'
+    dispatch:
+        name: Dispatch Using Action
+        runs-on: ubuntu-latest
+        steps:
+        - name: Print parameters
+          run: |
+            echo "organization: ${{ github.event.inputs.organization }}, branch: ${{ github.event.inputs.branch }}"
+        - name: Dispatch to workflows
+          uses: convictional/trigger-workflow-and-wait@v1.6.5
+          with:
+            owner: cmadam
+            repo: hunting-stack-testing
+            github_token: ${{ secrets.REMOTE_FINE_GRAINED_ACTIONS_TOKEN }}
+            workflow_file_name: testing_receiver.yml
+            ref: main
+            wait_interval: 10
+            propagate_failure: true
+            trigger_workflow: true
+            wait_workflow: true
+            client_payload: |
+                '{"organization": "${{ fromJSON(
+                    '{ "workflow_dispatch": "${{ github.event.inputs.organization }}", 
+                       "push": "${{ github.event.push.organization }}",
+                       "pull_request": "${{ github.event.pull_request.head.repo.name }}"}'
+                )[github.event_name] }}",
+                "branch": "${{ fromJSON(
+                    '{ "workflow_dispatch": "${{ github.event.inputs.branch }}"", 
+                       "push": "${{ github.event.push.base_ref }}",
+                       "pull_request": "${{ github.event.pull_request.head.label }}"}'
                 )[github.event_name] }}"}'
