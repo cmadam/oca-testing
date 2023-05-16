@@ -27,6 +27,7 @@ jobs:
         steps:
         - name: Print parameters
           run: |
+            echo "GITHUB EVENT: ${{ toJson(github.event) }}"
             if [[ ${{ github.event_name }} == "workflow_dispatch" ]]; then
                 echo "organization=${{ github.event.inputs.organization }}" >> $GITHUB_ENV
                 echo "repository=${{ github.event.inputs.repository }}" >> $GITHUB_ENV
