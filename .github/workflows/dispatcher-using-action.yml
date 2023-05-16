@@ -27,7 +27,7 @@ jobs:
         steps:
         - name: Print parameters
           run: |
-            echo "GITHUB: ${{ toJson(github) }}"
+            # echo "GITHUB: ${{ toJson(github) }}"
             if [[ ${{ github.event_name }} == "workflow_dispatch" ]]; then
                 echo "organization=${{ github.event.inputs.organization }}" >> $GITHUB_ENV
                 echo "repository=${{ github.event.inputs.repository }}" >> $GITHUB_ENV
@@ -42,7 +42,6 @@ jobs:
                 echo "repository=${{ github.event.pull_request.head.repo.name }}" >> $GITHUB_ENV
                 echo "branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
             fi
-            echo "organization: ${{ env.organization }}, branch: ${{ env.branch }}"
         - name: Dispatch to workflows
           uses: convictional/trigger-workflow-and-wait@v1.6.5
           with:
@@ -55,4 +54,4 @@ jobs:
             propagate_failure: true
             trigger_workflow: true
             wait_workflow: true
-            client_payload: '{"organization": "${{ env.organization}}", "branch": "${{ env.branch }}"}'
+            client_payload: '{"organization": "${{ env.organization}}", "repository": ${{ env.repository }}, "branch": "${{ env.branch }}"}'
