@@ -53,4 +53,4 @@ jobs:
             propagate_failure: true
             trigger_workflow: true
             wait_workflow: true
-            client_payload: '{"organization": "${{ env.organization}}", "repository": ${{ env.repository }}, "branch": "${{ env.branch }}"}'
+            client_payload: '{"organization": "${{ env.organization}}", "repository": "${{ env.repository }}", "branch": "${{ env.branch }}"}'
